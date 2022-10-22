@@ -1,0 +1,481 @@
+/* layout */
+* {
+  font-family: "GmarketSansLight";
+}
+
+/* header */
+#header {
+  width: 100%;
+  background: #fff;
+  position: fixed;
+  z-index: 9000;
+  font-family: "GmarketSansLight";
+}
+.row {
+  margin: 0;
+}
+.header__bar {
+  position: relative;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1.5px solid #555;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+}
+.logo {
+  margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+.logo img {
+  width: 75px;
+}
+.search__bar {
+  width: 100%;
+  max-width: 100%;
+}
+.search__icon {
+  margin-left: 1rem;
+}
+.my__page {
+  position: absolute;
+  right: 0;
+  top: 91px;
+  z-index: 100;
+  width: 22em;
+  float: right;
+  background: #fff;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+.my__page .my__page__title {
+  padding: 1rem;
+  border-bottom: 1px solid #d94870;
+  color: #d94870;
+  font-size: 1.1rem;
+  font-family: "GmarketSansMedium";
+}
+.my__page__list {
+  max-height: 310px;
+  padding: 15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.my__page__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+.my__page__item .photo {
+  margin-right: 0.5rem;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+}
+.my__page__contents {
+  margin-right: 1rem;
+  display: flex;
+}
+.my__page__contents .list__title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  line-height: 20px;
+  margin-bottom: 2px;
+  width: 110px;
+}
+.my__page__contents .list__title p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+.my__page__contents .list__title span {
+  color: #ffa800;
+  padding-left: 1rem;
+}
+.my__page__contents .list__desc {
+  color: #666;
+  margin-bottom: 0;
+}
+.my__page__login {
+  border-top: 1px solid #d94870;
+}
+.heart {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+/* main home ---> region */
+
+/* main 2 ---> select */
+
+
+/* main 2 ---> icon */
+
+
+
+
+/* main 2 ---> menu */
+
+
+
+
+/*  search_list_title */
+.search_list_title {
+  font-size: 40px;
+  text-align: center;
+  padding-top: 150px;
+}
+
+.search_list_setRegion {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 40px;
+}
+
+.search_list_imgcard {
+  padding-left: 17%;
+}
+
+.card_category {
+  font-size: 16px;
+}
+
+.card_name {
+  font-size: 22px;
+  font-weight: bold;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: block;
+  line-height: 0;
+}
+.clearfix::after {
+  clear: both;
+}
+
+.imgcard_box {
+  margin-right: 30px;
+  float: left;
+}
+
+/* RestaurantDetail */
+
+/* 텝 메뉴 */
+.theme--light.v-toolbar.v-sheet {
+  margin-top: 106px;
+}
+.v-slide-group__content > a > span {
+  font-weight: 700;
+}
+.tab_menu {
+  margin-left: 8%;
+  width: 1500px;
+}
+
+.tab_title_size {
+  width: 100px;
+}
+
+.res_info {
+  padding-top: 50px;
+  padding-left: 350px;
+  padding-bottom: 70px;
+}
+.detail_table tr {
+  height: 20px;
+}
+.detail_table td {
+  font-size: 18px !important;
+}
+.detail_table h1 {
+  font-size: 30px !important;
+}
+
+.like_btn {
+  margin-left: 10px;
+}
+
+.td_a_width {
+  width: 400px;
+}
+
+.table_img {
+  width: 700px;
+  height: 310px;
+  border-radius: 10px;
+}
+
+.table_slider_img {
+  width: 350px;
+  height: 220px;
+  border-radius: 10px;
+}
+
+.tag_style {
+  color: #aecc5d;
+  font-family: "GmarketSansMedium";
+}
+
+/* review */
+.res_review {
+  padding-top: 80px;
+  margin-left: 360px;
+  padding-bottom: 70px;
+  width: 1090px;
+}
+
+.res_review_title {
+  padding-bottom: 20px;
+}
+.res_review_title h2 {
+  font-size: 22px !important;
+  display: flex;
+  justify-content: space-between;
+}
+.review_btn {
+  float: right;
+  /* margin-right: 100px; */
+  width: 250px;
+}
+
+.review {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(231, 231, 231);
+  padding-top: 30px;
+}
+
+.user_icon {
+  padding-left: 20px;
+  font-size: 60px;
+}
+
+.review_td_a {
+  width: 100px;
+  padding-left: 20px;
+}
+
+.review_td_b {
+  width: 500px;
+  padding-left: 5px;
+}
+
+.review_td_c {
+  float: right;
+  font-size: 20px;
+  padding-right: 15px;
+}
+
+.review_td_c i {
+  margin-right: 10px;
+}
+
+.review_date {
+  padding-left: 20px;
+}
+
+.review_contnents_title {
+  padding-top: 20px;
+}
+
+.review_contnents {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+}
+
+.show_more {
+  text-align: center;
+  color: gray;
+  font-weight: bold;
+  padding-top: 20px;
+}
+
+/* menu */
+.res_menu {
+  padding-top: 80px;
+  margin-left: 420px;
+  padding-bottom: 70px;
+  /* width: 1090px; */
+}
+
+.res_menu h2 {
+  height: 80px;
+  font-size: 22px !important;
+}
+
+.menu_table {
+  color: gray;
+  font-size: 18px;
+}
+
+.menu_table tr {
+  height: 50px;
+}
+.menu_hr div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  margin: 0 2vw;
+  border-top: 1px solid gray;
+}
+.menu_price {
+  width: 200px;
+  text-align: left;
+}
+.menu_best {
+  margin-left: 100px;
+}
+.bestBtn {
+  margin-left: 160px;
+}
+.add_review {
+  padding: 35px;
+  font-size: 20px;
+  background-color: #aecc5d;
+}
+
+.add_review h2 {
+  padding-left: 50px;
+  font-size: 30px !important;
+  text-transform: uppercase;
+}
+
+.add_review_input {
+  padding: 40px;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.add_review_input input {
+  margin-bottom: 10px;
+  border: 1px solid rgb(233, 233, 233);
+  width: 98%;
+  height: 50px;
+  padding-left: 20px;
+  font-size: 20px !important;
+}
+
+.add_review_input textarea {
+  padding-top: 20px;
+  padding-left: 20px;
+  border: 1px solid rgb(233, 233, 233);
+  width: 98%;
+  height: 500px;
+}
+
+.review_btns {
+  text-align: right;
+  padding-right: 30px;
+  font-family: "GmarketSansBold";
+}
+.rating_sheet {
+  /* height: 300px; */
+  padding: 50px;
+}
+
+.add_rating {
+  text-align: center;
+  font-size: 12px;
+}
+.add_rating h2 {
+  height: 40px;
+  font-size: 22px !important;
+}
+
+.add_rating_title {
+  padding-left: 30px;
+  /* padding-left: 20px; */
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  font-size: 15px;
+  background-color: #aecc5d;
+}
+.add_rating_title h2 {
+  font-size: 25px !important;
+  text-transform: uppercase;
+}
+
+.review_btn_rating {
+  text-align: right;
+  /* padding-right: 30px; */
+  font-family: "GmarketSansBold";
+}
+
+/* footer */
+#footer {
+  background: #191919;
+  padding: 1.1rem 2rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "GmarketSansLight";
+}
+.footer__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* .footer__logo img {
+  width: 80px;
+} */
+.footer__logo em {
+  font-size: 1.8rem;
+  font-family: "Pacifico", cursive;
+  margin-bottom: 0.4rem;
+}
+.footer__logo span {
+  font-size: 12px;
+}
+.footer__contents {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.footer__list {
+  margin-bottom: 5px;
+}
+.footer__list li {
+  display: inline-block;
+  margin-right: 1rem;
+  position: relative;
+}
+.footer__list li::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 2px;
+  width: 0.8px;
+  height: 15px;
+  background: #fff;
+  opacity: 0.8;
+}
+.footer__list li:last-child {
+  margin-right: 0;
+}
+.footer__list li:last-child:after {
+  display: none;
+}
+.footer__list li a {
+  color: #fff;
+  font-size: 14px;
+}
+.footer__copyright {
+  margin-top: 5px;
+}
+.footer__copyright span {
+  font-size: 12px;
+}
