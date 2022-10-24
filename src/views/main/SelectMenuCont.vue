@@ -1,6 +1,6 @@
 <template>
   <div id="menu">
-    <div class="menu__item">
+    <div class="menu__item items">
       <h2 class="menu__item__title">
         <i class="fa-solid fa-quote-left"></i>
         어떤 음식을 원하시나요?
@@ -23,25 +23,21 @@
       </div>
     </div>
     <!-- //menu__item -->
-    <div class="section__item">
+    <div class="section__item items" ref="sectionItemData">
       <div
         class="section__container"
         v-for="(item, idx) in items"
         :key="idx"
         :id="item.name"
         :class="item.name"
-        :ref="item.name"
-      >
+        :ref="item.name">
         <div class="contents">
           <div class="side__title">
             <span>{{ item.side1 }}</span>
             <div class="line"></div>
             {{ item.side2 }}
           </div>
-          <div
-            class="image"
-            @click="$router.push({ name: 'search_list' }).catch(() => {})"
-          >
+          <div class="image" @click="$router.push({ name: 'search_list' }).catch(() => {})">
             <img :src="item.image" :alt="item.title" />
             <div class="click__effect">
               <i class="fa-regular fa-hand-pointer"></i>
@@ -69,54 +65,54 @@ export default {
     items: [
       {
         id: 0,
-        name: "korean__food",
-        side1: "koreanfood",
-        side2: "choose",
-        image: "../../assets/image/koreafood@3x.jpg",
-        title: "한식",
-        desc: "맛도 좋고 영양가도 좋은 한식을 오늘의 메뉴를 선택하시는 건 어떤가요? 어머니의 밥상이 생각나는 우리들의 밥상 한식을 선택해보세요.",
+        name: 'korean__food',
+        side1: 'koreanfood',
+        side2: 'choose',
+        image: '../../assets/image/koreafood@3x.jpg',
+        title: '한식',
+        desc: '맛도 좋고 영양가도 좋은 한식을 오늘의 메뉴를 선택하시는 건 어떤가요? 어머니의 밥상이 생각나는 우리들의 밥상 한식을 선택해보세요.',
       },
       {
         id: 1,
-        name: "chinese__food",
-        side1: "chinesefood",
-        side2: "choose",
-        image: "../../assets/image/chinesefood@3x.jpg",
-        title: "중식",
-        desc: "마라탕부터 짜장면까지 다양한 종류의 중화요리들이 여러분을 기다리고 있습니다. 서울지역 중식요리를 통해 식도락을 떠나 보세요.",
+        name: 'chinese__food',
+        side1: 'chinesefood',
+        side2: 'choose',
+        image: '../../assets/image/chinesefood@3x.jpg',
+        title: '중식',
+        desc: '마라탕부터 짜장면까지 다양한 종류의 중화요리들이 여러분을 기다리고 있습니다. 서울지역 중식요리를 통해 식도락을 떠나 보세요.',
       },
       {
         id: 2,
-        name: "japan__food",
-        side1: "japanesefood",
-        side2: "choose",
-        image: "../../assets/image/japanesefood@3x.jpg",
-        title: "일식",
-        desc: "일본식 가정식부터 초밥, 라멘까지 일본만의 특유 감성이 깃들여 있는 서울 지역 일식 맛집들을 만나보실 수 있습니다. ",
+        name: 'japan__food',
+        side1: 'japanesefood',
+        side2: 'choose',
+        image: '../../assets/image/japanesefood@3x.jpg',
+        title: '일식',
+        desc: '일본식 가정식부터 초밥, 라멘까지 일본만의 특유 감성이 깃들여 있는 서울 지역 일식 맛집들을 만나보실 수 있습니다. ',
       },
       {
         id: 3,
-        name: "western__food",
-        side1: "westernfood",
-        side2: "choose",
-        image: "../../assets/image/westernfood@3x.jpg",
-        title: "양식",
-        desc: "특별한 날 분위기 좋은 곳에서 식사 어떠신가요? 스테이크, 토마호크, 파스타 등 다양한 양식 식당들을 만나 보실 수 있습니다.",
+        name: 'western__food',
+        side1: 'westernfood',
+        side2: 'choose',
+        image: '../../assets/image/westernfood@3x.jpg',
+        title: '양식',
+        desc: '특별한 날 분위기 좋은 곳에서 식사 어떠신가요? 스테이크, 토마호크, 파스타 등 다양한 양식 식당들을 만나 보실 수 있습니다.',
       },
 
       {
         id: 4,
-        name: "fast__food",
-        side1: "fastfood",
-        side2: "choose",
-        image: "../../assets/image/fastfood@3x.jpg",
-        title: "패스트푸드",
-        desc: "바쁜 일상 속 간편하게 먹을 수 있는 패스트푸드점 부터 여행을 온듯한 분위기를 연출하는 맛집 등 다양한 패스트푸드 식당들을 만나보실수 있습니다.",
+        name: 'fast__food',
+        side1: 'fastfood',
+        side2: 'choose',
+        image: '../../assets/image/fastfood@3x.jpg',
+        title: '패스트푸드',
+        desc: '바쁜 일상 속 간편하게 먹을 수 있는 패스트푸드점 부터 여행을 온듯한 분위기를 연출하는 맛집 등 다양한 패스트푸드 식당들을 만나보실수 있습니다.',
       },
     ],
     select: 0,
   }),
-  props: ["scrollEvent"],
+  props: ['Horizontal', 'scrollIconEvent'],
 };
 </script>
 
@@ -130,7 +126,7 @@ export default {
   left: 0;
   top: 0;
   display: flex;
-  font-family: "GmarketSansLight";
+  font-family: 'GmarketSansLight';
 }
 #menu > div {
   position: relative;
@@ -149,7 +145,7 @@ export default {
 }
 .menu__item__title {
   font-size: 3rem !important;
-  font-family: "GmarketSansBold";
+  font-family: 'GmarketSansBold';
 }
 .menu__item__title .fa-quote-left {
   margin-right: 10px;
@@ -159,7 +155,7 @@ export default {
 }
 .menu__item__title p {
   font-size: 2rem !important;
-  font-family: "GmarketSansMedium";
+  font-family: 'GmarketSansMedium';
 }
 .menu__item__title .arrow {
   position: absolute;
@@ -206,7 +202,7 @@ export default {
   width: 80%;
 }
 .contents::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 50%;
   bottom: -5em;
@@ -258,7 +254,7 @@ export default {
   cursor: pointer;
   background: rgba(255, 255, 255, 1);
   text-transform: uppercase;
-  font-family: "GmarketSansMedium";
+  font-family: 'GmarketSansMedium';
   transition: 10s;
 }
 .image:hover img {

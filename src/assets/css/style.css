@@ -1,6 +1,6 @@
 /* layout */
 * {
-  font-family: "GmarketSansLight";
+  font-family: 'GmarketSansLight';
 }
 
 /* header */
@@ -9,7 +9,7 @@
   background: #fff;
   position: fixed;
   z-index: 9000;
-  font-family: "GmarketSansLight";
+  font-family: 'GmarketSansLight';
 }
 .row {
   margin: 0;
@@ -56,7 +56,7 @@
   border-bottom: 1px solid #d94870;
   color: #d94870;
   font-size: 1.1rem;
-  font-family: "GmarketSansMedium";
+  font-family: 'GmarketSansMedium';
 }
 .my__page__list {
   max-height: 310px;
@@ -114,16 +114,9 @@
 
 /* main 2 ---> select */
 
-
 /* main 2 ---> icon */
 
-
-
-
 /* main 2 ---> menu */
-
-
-
 
 /*  search_list_title */
 .search_list_title {
@@ -156,7 +149,7 @@
 }
 .clearfix::before,
 .clearfix::after {
-  content: "";
+  content: '';
   display: block;
   line-height: 0;
 }
@@ -188,9 +181,10 @@
 }
 
 .res_info {
-  padding-top: 50px;
+  padding: 5vh 18.5vw 7vh;
+  /* padding-top: 50px;
   padding-left: 350px;
-  padding-bottom: 70px;
+  padding-bottom: 70px; */
 }
 .detail_table tr {
   height: 20px;
@@ -224,7 +218,7 @@
 
 .tag_style {
   color: #aecc5d;
-  font-family: "GmarketSansMedium";
+  font-family: 'GmarketSansMedium';
 }
 
 /* review */
@@ -303,42 +297,55 @@
 
 /* menu */
 .res_menu {
-  padding-top: 80px;
-  margin-left: 420px;
-  padding-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* max-width: 200px; */
+  /* padding: 5vw 20vw; */
+  /* align-items: center; */
+  /* padding-top: 80px; */
+  /* margin-left: 420px; */
+  /* padding-bottom: 70px; */
   /* width: 1090px; */
 }
 
 .res_menu h2 {
+  padding: 9vh 0 7vh 18vw;
   height: 80px;
   font-size: 22px !important;
 }
-
 .menu_table {
+  padding-left: 18vw;
   color: gray;
   font-size: 18px;
 }
-
 .menu_table tr {
   height: 50px;
+}
+/* .menu_table td {
+   max-width: 0vw;
+} */
+.menu_title {
+  /* width: 10vw; */
 }
 .menu_hr div {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 400px;
-  margin: 0 2vw;
+  width: 250%;
+  padding: 0 2vw;
   border-top: 1px solid gray;
 }
 .menu_price {
-  width: 200px;
+  /* width: 200px; */
   text-align: left;
+  padding-left: 15vw;
 }
-.menu_best {
+/* .menu_best {
   margin-left: 100px;
-}
+} */
 .bestBtn {
-  margin-left: 160px;
+  margin-right: 8vw;
 }
 .add_review {
   padding: 35px;
@@ -378,7 +385,7 @@
 .review_btns {
   text-align: right;
   padding-right: 30px;
-  font-family: "GmarketSansBold";
+  font-family: 'GmarketSansBold';
 }
 .rating_sheet {
   /* height: 300px; */
@@ -411,7 +418,7 @@
 .review_btn_rating {
   text-align: right;
   /* padding-right: 30px; */
-  font-family: "GmarketSansBold";
+  font-family: 'GmarketSansBold';
 }
 
 /* footer */
@@ -422,7 +429,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: "GmarketSansLight";
+  font-family: 'GmarketSansLight';
 }
 .footer__logo {
   display: flex;
@@ -434,7 +441,7 @@
 } */
 .footer__logo em {
   font-size: 1.8rem;
-  font-family: "Pacifico", cursive;
+  font-family: 'Pacifico', cursive;
   margin-bottom: 0.4rem;
 }
 .footer__logo span {
@@ -454,7 +461,7 @@
   position: relative;
 }
 .footer__list li::after {
-  content: "";
+  content: '';
   position: absolute;
   right: -10px;
   top: 2px;

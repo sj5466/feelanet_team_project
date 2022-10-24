@@ -6,7 +6,9 @@
         <div class="text-right">
           <v-bottom-sheet v-model="sheet" inset>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn outlined width="150" color="green" dark v-bind="attrs" v-on="on" class="addBtn"> + ADD REVIEW </v-btn>
+              <v-btn outlined width="150" color="green" dark v-bind="attrs" v-on="on" class="addBtn">
+                + ADD REVIEW
+              </v-btn>
             </template>
             <v-sheet height="1000px">
               <div class="add_review">
@@ -76,10 +78,4 @@ export default {
 };
 </script>
 
-<style>
-.v-btn__content {
-  font-size: 16px;
-}
-</style>
-
-ReviewDetail
+<style></style>
