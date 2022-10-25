@@ -3,11 +3,7 @@
     <v-container>
       <v-layout>
         <v-flex>
-          <v-btn
-            class="ma-2 backBtn black--text"
-            color="white"
-            dark
-            @click="$router.push({ name: 'search_list' }).catch(() => {})"
+          <v-btn class="ma-2 backBtn black--text" color="white" dark @click="$router.push({ name: 'search_list' }).catch(() => {})"
             ><v-icon dark left class="black--text"> mdi-arrow-left </v-icon>Back
           </v-btn>
           <v-sheet class="tab_menu">
@@ -22,10 +18,10 @@
   </div>
 </template>
 <script>
-import TabMenu from './TabMenu.vue';
+import TabMenu from "./TabMenu.vue";
 export default {
   components: { TabMenu },
-  name: 'RestaurantDetail',
+  name: "RestaurantDetail",
 };
 </script>
 

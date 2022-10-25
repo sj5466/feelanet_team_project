@@ -1,45 +1,13 @@
 <template>
   <div class="res_menu">
-    <h2>메뉴 8</h2>
+    <h2>메뉴 {{ restaurantInfo[0].menu.length }}</h2>
     <table class="menu_table">
       <tbody>
-        <tr>
-          <td class="menu_title">런치 오마카세</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">120,000원</td>
-        </tr>
-        <tr>
-          <td class="menu_title">디너 오마카세</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">250,000원</td>
-          <td class="menu_best"><v-btn outlined color="error" class="like_btn bestBtn"> 대표 </v-btn></td>
-        </tr>
-        <tr>
-          <td class="menu_title">사시미 단품</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">100,000원</td>
-        </tr>
-        <tr>
-          <td class="menu_title">런치 오마카세</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">120,000원</td>
-        </tr>
-        <tr>
-          <td class="menu_title">디너 오마카세</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">250,000원</td>
-          <td class="menu_best"></td>
-        </tr>
-        <tr>
-          <td class="menu_title">사시미 단품</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">100,000원</td>
-        </tr>
-        <tr>
-          <td class="menu_title">생맥주</td>
-          <td class="menu_hr"><div></div></td>
-          <td class="menu_price">7,000원</td>
-          <td></td>
+        <tr v-for="(menu, idx) in restaurantInfo[0].menu" :key="menu.name">
+          <td class="menu_title">{{ menu.name }}</td>
+          <td class="menu_hr"><hr /></td>
+          <td class="menu_price">{{ menu.price }}원</td>
+          <td v-if="idx === 0" class="menu_best"><v-btn outlined color="error" class="like_btn bestBtn"> 대표 </v-btn></td>
         </tr>
       </tbody>
     </table>
@@ -47,7 +15,16 @@
 </template>
 
 <script>
-export default {};
-</script>
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {};
+  },
 
-<style></style>
+  computed: {
+    ...mapState(["restaurantInfo"]),
+  },
+
+  methods: {},
+};
+</script>
