@@ -46,9 +46,6 @@ export default {
       let selectItem = document.querySelector('.section__item');
       let iconImg = document.querySelectorAll('.menu__icon__img');
 
-      // let iconActive = document.querySelector('.menu__icon > div:nth-child(' + 5 + ')');
-      // console.log(iconActive);
-
       for (let i = 0; i < selectContainers.length; i++) {
         if (selectContainers[i].getBoundingClientRect().x <= 0) {
           var currentIndex = 0;

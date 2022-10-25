@@ -6,8 +6,9 @@
           <a href="/home"> <img src="../../assets/image/logo@3x.png" alt="logo" /></a>
         </div>
         <!-- //logo -->
-        <div class="search__bar">
+        <div class="search__bar" @click="onClickSearchBar">
           <v-autocomplete
+            v-if="isEditing"
             v-model="model"
             :items="items"
             :loading="isLoading"
@@ -18,8 +19,9 @@
             hide-selected
             item-text="name"
             item-value="id"
-            label="지역이나 음시종류를 검색 해주세요"
-            solo>
+            label="Search for a coin..."
+            solo
+          >
             <template v-slot:no-data>
               <v-list-item>
                 <v-list-item-title>
@@ -50,9 +52,9 @@
         </div>
 
         <div class="search__icon">
-          <v-btn color="white" fab small>
-            <!-- <v-icon> mdi-close </v-icon> -->
-            <v-icon> mdi-magnify </v-icon>
+          <v-btn color="white" fab small @click="isEditing = !isEditing">
+            <v-icon v-if="isEditing"> mdi-close </v-icon>
+            <v-icon v-else> mdi-magnify </v-icon>
           </v-btn>
         </div>
         <!-- //search__icon -->
@@ -104,7 +106,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
+  mounted() {
+    this.fetchData; // 데이터 호출
+  },
   data: () => ({
     isEditing: false,
     isLoading: false,
@@ -117,43 +124,43 @@ export default {
     mylists: [
       {
         id: 0,
-        image: '../../assets/image/mylist1.png',
-        title: '팔레드 신',
-        alt: '식당1',
-        score: '4.6',
-        desc: '종로구 - 중식',
+        image: "../../assets/image/mylist1.png",
+        title: "팔레드 신",
+        alt: "식당1",
+        score: "4.6",
+        desc: "종로구 - 중식",
       },
       {
         id: 1,
-        image: '../../assets/image/mylist2.png',
-        title: '반티엔야오',
-        alt: '식당2',
-        score: '4.4',
-        desc: '강남구 - 중식',
+        image: "../../assets/image/mylist2.png",
+        title: "반티엔야오",
+        alt: "식당2",
+        score: "4.4",
+        desc: "강남구 - 중식",
       },
       {
         id: 2,
-        image: '../../assets/image/mylist3.png',
-        title: '농민백암순대',
-        alt: '식당3',
-        score: '4.8',
-        desc: '강남구 - 한식',
+        image: "../../assets/image/mylist3.png",
+        title: "농민백암순대",
+        alt: "식당3",
+        score: "4.8",
+        desc: "강남구 - 한식",
       },
       {
         id: 3,
-        image: '../../assets/image/mylist4.png',
-        title: '호운',
-        alt: '식당4',
-        score: '4.5',
-        desc: '강북구 - 한식',
+        image: "../../assets/image/mylist4.png",
+        title: "호운",
+        alt: "식당4",
+        score: "4.5",
+        desc: "강북구 - 한식",
       },
       {
         id: 4,
-        image: '../../assets/image/mylist3.png',
-        title: '농민백암순대',
-        alt: '식당5',
-        score: '4.8',
-        desc: '강남구 - 한식',
+        image: "../../assets/image/mylist3.png",
+        title: "농민백암순대",
+        alt: "식당5",
+        score: "4.8",
+        desc: "강남구 - 한식",
       },
     ],
   }),
@@ -167,12 +174,12 @@ export default {
       if (this.items.length > 0) return;
       this.isLoading = true;
       // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then(res => res.clone().json())
-        .then(res => {
+      fetch("https://api.coingecko.com/api/v3/coins/list")
+        .then((res) => res.clone().json())
+        .then((res) => {
           this.items = res;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         })
         .finally(() => (this.isLoading = false));
@@ -187,8 +194,16 @@ export default {
     },
     scroll(refName) {
       const element = document.getElementById(refName);
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     },
+    // 검색창 클릭시 데이터 확인
+    onClickSearchBar() {
+      console.log(this.dataList);
+    },
+  },
+  computed: {
+    ...mapState(["dataList"]),
+    ...mapGetters(["fetchData"]),
   },
 };
 </script>
@@ -197,11 +212,4 @@ export default {
 @import url(../../assets/css/common.css);
 @import url(../../assets/css/style.css);
 @import url(../../assets/css/fonts.css);
-
-/* .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot {
-  border-radius: 50px;
-}
-.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot.active {
-  border-radius: 0px;
-} */
 </style>

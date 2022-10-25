@@ -2,11 +2,11 @@
   <div class="res_review">
     <div class="res_review_title">
       <h2>
-        사용자 리뷰 {{ restaurantInfo[0].review.length }}
+        사용자 리뷰 ( {{ restaurantInfo[0].review.length }} )
         <div class="text-right">
           <v-bottom-sheet v-model="sheet" inset>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn outlined width="150" color="green" dark v-bind="attrs" v-on="on"> + ADD REVIEW </v-btn>
+              <v-btn outlined width="150" color="green" dark v-bind="attrs" v-on="on" class="addBtn"> + ADD REVIEW </v-btn>
             </template>
             <v-sheet height="1000px">
               <div class="add_review">
@@ -57,8 +57,8 @@
   </div>
 </template>
 <script>
-import ReviewDetails from "./ReviewDetails.vue";
-import { mapState } from "vuex";
+import ReviewDetails from './ReviewDetails.vue';
+import { mapState } from 'vuex';
 
 export default {
   components: { ReviewDetails },
@@ -75,7 +75,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["restaurantInfo"]),
+    ...mapState(['restaurantInfo']),
   },
 };
 </script>

@@ -181,10 +181,10 @@
 }
 
 .res_info {
-  padding: 5vh 18.5vw 7vh;
-  /* padding-top: 50px;
-  padding-left: 350px;
-  padding-bottom: 70px; */
+  padding: 5vh 18vw 7vh;
+}
+.main_img {
+  margin-left: 2vw;
 }
 .detail_table tr {
   height: 20px;
@@ -239,11 +239,11 @@
 }
 .review_btn {
   float: right;
-  /* margin-right: 100px; */
   width: 250px;
 }
 
 .review {
+  min-width: 57vw;
   padding-bottom: 20px;
   border-bottom: 1px solid rgb(231, 231, 231);
   padding-top: 30px;
@@ -294,25 +294,21 @@
   font-weight: bold;
   padding-top: 20px;
 }
+.addBtn {
+  font-size: 14px !important;
+}
 
 /* menu */
 .res_menu {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* max-width: 200px; */
-  /* padding: 5vw 20vw; */
-  /* align-items: center; */
-  /* padding-top: 80px; */
-  /* margin-left: 420px; */
-  /* padding-bottom: 70px; */
-  /* width: 1090px; */
 }
 
 .res_menu h2 {
-  padding: 9vh 0 7vh 18vw;
+  padding: 9vh 0 10vh 18vw;
   height: 80px;
-  font-size: 22px !important;
+  font-size: 25px !important;
 }
 .menu_table {
   padding-left: 18vw;
@@ -322,30 +318,28 @@
 .menu_table tr {
   height: 50px;
 }
-/* .menu_table td {
-   max-width: 0vw;
-} */
 .menu_title {
-  /* width: 10vw; */
+  width: 6.5vw;
 }
+
 .menu_hr div {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 250%;
-  padding: 0 2vw;
+  width: 95%;
+  padding: 0px 2vw 0 6vw;
   border-top: 1px solid gray;
 }
 .menu_price {
-  /* width: 200px; */
+  width: 9vw;
   text-align: left;
-  padding-left: 15vw;
+  /* padding-left: 2vw; */
 }
 /* .menu_best {
   margin-left: 100px;
 } */
 .bestBtn {
-  margin-right: 8vw;
+  margin: 0 0vw 0 1.6vw;
 }
 .add_review {
   padding: 35px;

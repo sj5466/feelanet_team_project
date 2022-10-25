@@ -10,11 +10,9 @@ const routes = [
     redirect: 'home',
     name: 'site',
     component: IndexView,
-
     children: [
       {
         path: 'home',
-        name: 'home',
         component: () => import(/*webpackChunkName:"MainHome"*/ '@/views/main/MainHome.vue'),
         children: [
           {

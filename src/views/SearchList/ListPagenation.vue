@@ -1,14 +1,19 @@
 <template>
-    <v-pagination class="pagenation" v-model="page" :length="10" square></v-pagination>
+  <v-pagination class="pagenation" v-model="page" :length="10" square @input="updatePage"></v-pagination>
 </template>
 
 <script>
 export default {
-  name: "ListPagenation",
+  name: 'ListPagenation',
   data() {
     return {
       page: 1,
     };
+  },
+  methods: {
+    updatePage() {
+      this.$emit('updatePage', this.page);
+    },
   },
 };
 </script>

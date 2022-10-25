@@ -3,15 +3,24 @@
     <v-container>
       <v-layout>
         <v-flex>
+          <v-btn
+            class="ma-2 backBtn black--text"
+            color="white"
+            dark
+            @click="$router.push({ name: 'site' }).catch(() => {})"
+            ><v-icon dark left class="black--text"> mdi-arrow-left </v-icon>home
+          </v-btn>
           <v-sheet class="search_list_title"><span>강남구 한식</span> 맛집</v-sheet>
           <v-sheet class="search_list_setRegion"
-            ><div @click="$router.push({ name: 'home' }).catch(() => {})"><a>다른 지역 음식을 찾으신다면?</a></div></v-sheet
+            ><div @click="$router.push({ name: 'site' }).catch(() => {})">
+              <a>다른 지역 음식을 찾으신다면?</a>
+            </div></v-sheet
           >
           <v-sheet class="search_list_imgcard">
-            <imgcard v-for="(item, idx) in dataList" :key="idx" :item="item" />
+            <imgcard v-for="(item, idx) in visibleDatas" :key="idx" :item="item" />
           </v-sheet>
           <v-sheet class="search_list_pagenation">
-            <list-pagenation />
+            <list-pagenation @updatePage="updatePage" @change="updatePage" />
           </v-sheet>
           <v-sheet height="50"></v-sheet>
         </v-flex>
@@ -21,32 +30,49 @@
 </template>
 
 <script>
-import Imgcard from "./Imgcard.vue";
-import ListPagenation from "./ListPagenation.vue";
-import { mapState } from "vuex";
+import Imgcard from './Imgcard.vue';
+import ListPagenation from './ListPagenation.vue';
+import { mapState } from 'vuex';
 // import { mapGetters } from "vuex";
 
 export default {
   components: { Imgcard, ListPagenation },
-  name: "SearchList",
+  name: 'SearchList',
   data() {
-    return {};
+    return {
+      visibleDatas: [],
+      currentPage: 0,
+      pageSize: 12,
+    };
   },
   mounted() {
     this.toTheTop();
-    // console.log(this.dataList);
+    this.updateVisibleDatas();
   },
   methods: {
     toTheTop() {
       window.scrollTo(0, 0);
     },
+
+    updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.updateVisibleDatas();
+      // console.log(pageNumber);
+    },
+
+    updateVisibleDatas() {
+      this.visibleDatas = this.dataList.slice(
+        this.currentPage * this.pageSize,
+        this.currentPage * this.pageSize + this.pageSize,
+      );
+      if (this.visibleDatas.length == 0 && this.currentPage > 0) {
+        this.updateVisibleDatas(this.currentPage - 1);
+      }
+      window.scrollTo(0, 0);
+    },
   },
   computed: {
-    ...mapState(["dataList"]),
-    // dataList() {
-    //   console.log(this.$store.getters.fetchData);
-    //   return this.$store.getters.fetchData;
-    // },
+    ...mapState(['dataList']),
   },
 };
 </script>

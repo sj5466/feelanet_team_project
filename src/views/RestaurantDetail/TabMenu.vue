@@ -3,7 +3,7 @@
     <v-toolbar flat class="tab_margin">
       <template>
         <v-tabs v-model="tabs" fixed-tabs color="black">
-          <v-tab href="#mobile-tabs-5-1" @click="$router.push({ name: 'res_info' }).catch(() => {})">
+          <v-tab href="#mobile-tabs-5-1" @click="$router.push({ name: 'res_info' })">
             <span class="tab_title_size">Detail</span>
           </v-tab>
           <v-tab href="#mobile-tabs-5-2" @click="$router.push({ name: 'res_review' }).catch(() => {})"> Review </v-tab>
