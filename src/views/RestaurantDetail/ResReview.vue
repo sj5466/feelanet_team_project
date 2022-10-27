@@ -2,7 +2,7 @@
   <div class="res_review">
     <div class="res_review_title">
       <h2>
-        사용자 리뷰 ( {{ restaurantInfo[0].review.length }} )
+        사용자 리뷰 ( {{ selectedRes.review.length }} )
         <div class="text-right">
           <v-bottom-sheet v-model="sheet" inset>
             <template v-slot:activator="{ on, attrs }">
@@ -13,8 +13,8 @@
                 <h2>Add Review</h2>
               </div>
               <div class="add_review_input">
-                <div><input type="text" placeholder="제목을 입력해주세요" /></div>
-                <div><textarea placeholder="리뷰를 작성해주세요"></textarea></div>
+                <div><input type="text" placeholder="제목을 입력해주세요" v-model="reviewTitle" /></div>
+                <div><textarea placeholder="리뷰를 작성해주세요" v-model="reviewContent"></textarea></div>
                 <div class="review_btns">
                   <v-btn class="mt-6" color="success" width="100" text @click="dialog = !dialog"> add </v-btn>
                   <v-btn class="mt-6" color="error" width="100" text @click="sheet = !sheet"> close </v-btn>
@@ -29,7 +29,7 @@
             <v-sheet class="rating_sheet">
               <div class="add_rating">
                 <h2>소중한 별점을 남겨주세요!</h2>
-                <v-rating background-color="orange lighten-10" color="orange" large class="rating_star"></v-rating>
+                <v-rating background-color="orange lighten-10" color="orange" large class="rating_star" @input="updateModel({ $event })"></v-rating>
               </div>
               <div>
                 <div class="review_btn_rating text-center">
@@ -53,33 +53,67 @@
         </div>
       </h2>
     </div>
-    <review-details />
+    <review-details :selectedRes="selectedRes" @editReview="editReview" />
   </div>
 </template>
 <script>
-import ReviewDetails from './ReviewDetails.vue';
-import { mapState } from 'vuex';
+import ReviewDetails from "./ReviewDetails.vue";
 
 export default {
   components: { ReviewDetails },
+  props: {
+    selectedRes: {
+      type: Object,
+      required: true,
+    },
+  },
   data: () => ({
     sheet: false,
     dialog: false,
     confirm: false,
+    reviewTitle: "",
+    reviewContent: "",
+    modifyReviewIdx: null,
+    setRates: 0,
   }),
   methods: {
     isAddReview() {
+      // console.log(this.setRates);
       this.sheet = !this.sheet;
       this.dialog = !this.dialog;
       this.confirm = !this.confirm;
+      // eslint-disable-next-line vue/no-mutating-props
+      if (this.modifyReviewIdx !== null) {
+        // eslint-disable-next-line vue/no-mutating-props
+        this.selectedRes.review[this.modifyReviewIdx].title = this.reviewTitle;
+        // eslint-disable-next-line vue/no-mutating-props
+        this.selectedRes.review[this.modifyReviewIdx].content = this.reviewContent;
+      } else {
+        var today = new Date().toLocaleDateString();
+        // eslint-disable-next-line vue/no-mutating-props
+        this.selectedRes.review.push({
+          writeDay: today,
+          title: this.reviewTitle,
+          content: this.reviewContent,
+          userId: "test",
+          rates: this.setRates,
+        });
+      }
     },
-  },
-  computed: {
-    ...mapState(['restaurantInfo']),
+
+    editReview(title, content, idx) {
+      this.reviewTitle = title;
+      this.reviewContent = content;
+      this.sheet = !this.sheet;
+      this.modifyReviewIdx = idx;
+    },
+    updateModel($event) {
+      // console.log($event); //
+      this.setRates = $event.$event;
+      // console.log($event.$event); // 3
+    },
   },
 };
 </script>
 
 <style></style>
-
-ReviewDetail

@@ -8,7 +8,6 @@
         <!-- //logo -->
         <div class="search__bar" @click="onClickSearchBar">
           <v-autocomplete
-            v-if="isEditing"
             v-model="model"
             :items="items"
             :loading="isLoading"
@@ -19,9 +18,8 @@
             hide-selected
             item-text="name"
             item-value="id"
-            label="Search for a coin..."
-            solo
-          >
+            label="지역 및 음식을 검색해주세요"
+            solo>
             <template v-slot:no-data>
               <v-list-item>
                 <v-list-item-title>
@@ -30,10 +28,10 @@
                 </v-list-item-title>
               </v-list-item>
             </template>
-            <template v-slot:selection="{ attr, on, item, selected }">
+            <template v-slot:selection="{ attr, on, selected }">
               <v-chip v-bind="attr" :input-value="selected" color="blue-grey" class="white--text" v-on="on">
-                <v-icon left> mdi-bitcoin </v-icon>
-                <span v-text="item.name"></span>
+                <v-icon left> </v-icon>
+                <span v-text="'중랑구'"></span>
               </v-chip>
             </template>
             <template v-slot:item="{ item }">
@@ -52,9 +50,8 @@
         </div>
 
         <div class="search__icon">
-          <v-btn color="white" fab small @click="isEditing = !isEditing">
-            <v-icon v-if="isEditing"> mdi-close </v-icon>
-            <v-icon v-else> mdi-magnify </v-icon>
+          <v-btn color="white" fab small>
+            <v-icon> mdi-magnify </v-icon>
           </v-btn>
         </div>
         <!-- //search__icon -->
@@ -73,22 +70,22 @@
     <div class="my__page" v-if="isMypage">
       <h1 class="my__page__title">나의 Wish List</h1>
       <div class="my__page__list">
-        <div class="my__page__item" v-for="list in mylists" :key="list">
+        <div class="my__page__item" v-for="(list, idx) in lists" :key="list">
           <div class="my__page__contents">
             <div class="photo">
-              <img :src="list.image" :alt="list.alt" />
+              <img :src="list.mainImg" :alt="list.alt" />
             </div>
             <div class="list">
               <div class="list__title">
                 <p>
-                  {{ list.title }}
+                  {{ list.name }}
                 </p>
-                <span>{{ list.score }}</span>
+                <span>{{ list.rates }}</span>
               </div>
-              <p class="list__desc">종로구 - 중식</p>
+              <p class="list__desc">{{ list.region }}- {{ list.title }}</p>
             </div>
           </div>
-          <v-btn class="mx-2 heart" fab dark small color="white" @click.stop="deleteBtn(list.id)">
+          <v-btn class="mx-2 heart" fab dark small color="white" @click="deleteBtn(idx)">
             <v-icon dark small color="pink"> mdi-heart </v-icon>
           </v-btn>
         </div>
@@ -106,11 +103,21 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { mapState } from "vuex";
+import EventBus from '@/EventBus/EventBus';
+// import { mapGetters } from "vuex";
+// import { mapState } from "vuex";
 export default {
   mounted() {
     this.fetchData; // 데이터 호출
+    // this.recieveData();
+    EventBus.$on('addFavorite', this.recieveData);
+    EventBus.$on('listDelete', this.deleteBtn);
+  },
+  props: {
+    selectedRes: {
+      type: Object,
+      required: true,
+    },
   },
   data: () => ({
     isEditing: false,
@@ -120,48 +127,48 @@ export default {
     model: null,
     search: null,
     tab: null,
-    lists: {},
-    mylists: [
-      {
-        id: 0,
-        image: "../../assets/image/mylist1.png",
-        title: "팔레드 신",
-        alt: "식당1",
-        score: "4.6",
-        desc: "종로구 - 중식",
-      },
-      {
-        id: 1,
-        image: "../../assets/image/mylist2.png",
-        title: "반티엔야오",
-        alt: "식당2",
-        score: "4.4",
-        desc: "강남구 - 중식",
-      },
-      {
-        id: 2,
-        image: "../../assets/image/mylist3.png",
-        title: "농민백암순대",
-        alt: "식당3",
-        score: "4.8",
-        desc: "강남구 - 한식",
-      },
-      {
-        id: 3,
-        image: "../../assets/image/mylist4.png",
-        title: "호운",
-        alt: "식당4",
-        score: "4.5",
-        desc: "강북구 - 한식",
-      },
-      {
-        id: 4,
-        image: "../../assets/image/mylist3.png",
-        title: "농민백암순대",
-        alt: "식당5",
-        score: "4.8",
-        desc: "강남구 - 한식",
-      },
+    lists: [],
+    menuList: [
+      '김치찌개',
+      '된장찌개',
+      '순두부찌개',
+      '제육볶음',
+      '김치전',
+      '파전',
+      '콩비지찌개',
+      '잡채',
+      '마라탕',
+      '지삼선',
+      '마파두부',
+      '싼라펀',
+      '꿔바로우',
+      '미씨엔',
+      '카오렁미엔',
+      '우육면',
+      '연어초밥',
+      '모듬초밥',
+      '참치초밥',
+      '연어사시미',
+      '광어사시미',
+      '모듬사시미',
+      '카이센동',
+      '연어동',
+      '팟타이',
+      '쌀국수',
+      '분짜',
+      '쏨땀',
+      '매운쌀국수',
+      '곱창쌀국수',
+      '커리덮밥',
+      '탄두리치킨',
+      '양념치킨',
+      '후라이드치킨',
+      '치킨버거',
+      '제로콜라',
+      '간장치킨',
+      '갈릭치킨',
+      '반반치킨',
+      '핫도그',
     ],
   }),
   watch: {
@@ -174,36 +181,36 @@ export default {
       if (this.items.length > 0) return;
       this.isLoading = true;
       // Lazily load input items
-      fetch("https://api.coingecko.com/api/v3/coins/list")
-        .then((res) => res.clone().json())
-        .then((res) => {
+      fetch('https://api.coingecko.com/api/v3/coins/list')
+        .then(res => res.clone().json())
+        .then(res => {
           this.items = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         })
         .finally(() => (this.isLoading = false));
     },
   },
   methods: {
-    deleteBtn(id) {
-      var index = this.mylists.findIndex(function (item) {
-        return item.id === id;
+    deleteBtn(idx) {
+      var index = this.lists.findIndex(function (num) {
+        return idx === num;
       });
-      this.mylists.splice(index, 1);
-    },
-    scroll(refName) {
-      const element = document.getElementById(refName);
-      element.scrollIntoView({ behavior: "smooth" });
+      this.lists.splice(index, 1);
     },
     // 검색창 클릭시 데이터 확인
     onClickSearchBar() {
       console.log(this.dataList);
     },
+    recieveData(selectedRes) {
+      //RestaurantDetail 컴퍼넌트에서 데이터를 Wish List에 추가하기
+      this.lists.push(selectedRes);
+    },
   },
   computed: {
-    ...mapState(["dataList"]),
-    ...mapGetters(["fetchData"]),
+    // ...mapState(["dataList"]),
+    // ...mapGetters(["fetchData"]),
   },
 };
 </script>

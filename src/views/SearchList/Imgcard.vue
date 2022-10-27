@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="imgcard_box" @click="selectRes(item), $router.push({ name: 'res_info' }).catch(() => {})">
+    <div class="imgcard_box" @click="getDetail(item), $router.push({ name: 'res_info' }).catch(() => {})">
       <v-card class="mx-auto my-8 imgcard" max-width="374" style="float: left">
         <template slot="progress">
           <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
@@ -18,14 +18,19 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+// import { mapMutations } from "vuex";
 export default {
   name: "ImgCard",
   data() {
     return {};
   },
+
   methods: {
-    ...mapMutations(["selectRes"]),
+    // ...mapMutations(["selectRes"]),
+    getDetail(item) {
+      // console.log(item);
+      this.$emit("getDetail", item);
+    },
   },
   components: {},
   props: {

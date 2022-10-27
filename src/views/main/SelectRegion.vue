@@ -6,9 +6,7 @@
         당신이 원하는 정보가 요기 다 있지~!
         <i class="fa-solid fa-quote-right"></i>
       </h2>
-      <p class="region__desc">
-        어떤 지역의 맛집을 원하시나요? 해당 지역을 선택해주세요!
-      </p>
+      <p class="region__desc">어떤 지역의 맛집을 원하시나요? 해당 지역을 선택해주세요!</p>
       <div class="text-left region__items">
         <v-btn
           rounded
@@ -18,7 +16,7 @@
           min-height="50px"
           v-for="(region, index) in regions"
           :key="index"
-          @click="scroll('select')"
+          @click="scroll('select'), setRegion(region.name)"
         >
           <span>{{ region.name }}</span>
         </v-btn>
@@ -61,6 +59,10 @@ export default {
     scroll(refName) {
       const element = document.getElementById(refName);
       element.scrollIntoView({ behavior: "smooth" });
+    },
+    setRegion(name) {
+      // console.log(name);
+      this.$emit("setRegion", name);
     },
   },
 };

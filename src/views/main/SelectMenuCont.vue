@@ -33,11 +33,11 @@
         :ref="item.name">
         <div class="contents">
           <div class="side__title">
-            <span>{{ item.side1 }}</span>
-            <div class="line"></div>
-            {{ item.side2 }}
+            <p>
+              {{ item.side1 }}<span class="line"></span><span>{{ item.side2 }}</span>
+            </p>
           </div>
-          <div class="image" @click="$router.push({ name: 'search_list' }).catch(() => {})">
+          <div class="image" @click="$router.push({ name: 'search_list' }).catch(() => {}), setMenu(item.title)">
             <img :src="item.image" :alt="item.title" />
             <div class="click__effect">
               <i class="fa-regular fa-hand-pointer"></i>
@@ -113,6 +113,12 @@ export default {
     select: 0,
   }),
   props: ['Horizontal', 'scrollIconEvent'],
+  methods: {
+    setMenu(menu) {
+      //해당 메뉴의 정보를 $emit으로 올려 보낸 다음 Search List에서 보일 수 있도록 함
+      this.$emit('setMenu', menu);
+    },
+  },
 };
 </script>
 
@@ -130,7 +136,6 @@ export default {
 }
 #menu > div {
   position: relative;
-  /* width: 200vh; */
   height: 100vh;
 }
 .menu__item {
@@ -230,15 +235,20 @@ export default {
   z-index: 12;
   text-transform: uppercase;
   font-size: 1.4rem;
-  transform: rotate(90deg);
   position: absolute;
-  left: -8em;
-  top: 37%;
+  left: 0.2vw;
+  top: 0;
+}
+.side__title p {
+  writing-mode: vertical-rl;
+}
+.side__title span {
+  margin-top: 0.5em;
 }
 .side__title .line {
   display: inline-block;
-  width: 53px;
-  height: 1px;
+  width: 1px;
+  height: 53px;
   background: #000;
 }
 .image {
@@ -294,7 +304,7 @@ export default {
   width: 47em;
   z-index: 10;
   text-align: left;
-  margin-left: 1em;
+  margin-left: 1.3vw;
   margin-top: 3.5em;
 }
 .desc h3 {

@@ -1,9 +1,9 @@
 <template>
   <div class="res_menu">
-    <h2>메뉴 ( {{ restaurantInfo[0].menu.length }} )</h2>
+    <h2>메뉴 ( {{ selectedRes.menu.length }} )</h2>
     <table class="menu_table">
       <tbody>
-        <tr v-for="(menu, idx) in restaurantInfo[0].menu" :key="menu.name">
+        <tr v-for="(menu, idx) in selectedRes.menu" :key="menu.name">
           <td class="menu_title">{{ menu.name }}</td>
           <td class="menu_hr"><div></div></td>
           <td class="menu_price">{{ menu.price }}원</td>
@@ -17,14 +17,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
+  props: {
+    selectedRes: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {};
-  },
-
-  computed: {
-    ...mapState(['restaurantInfo']),
   },
 
   methods: {},

@@ -135,6 +135,10 @@
 .search_list_imgcard {
   padding-left: 17%;
 }
+.v-application--is-ltr .v-responsive__sizer ~ .v-responsive__content {
+  margin-left: -100%;
+  cursor: pointer;
+}
 
 .card_category {
   font-size: 16px;
