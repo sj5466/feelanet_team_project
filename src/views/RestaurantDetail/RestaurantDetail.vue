@@ -3,13 +3,12 @@
     <v-container class="restaurant">
       <v-layout>
         <v-flex>
-          <v-btn
-            class="ma-2 backBtn black--text"
-            color="white"
-            dark
-            @click="$router.push({ name: 'search_list' }).catch(() => {})"
-            ><v-icon dark left class="black--text"> mdi-arrow-left </v-icon>Back
-          </v-btn>
+          <router-link :to="'/search_list/' + region + '/' + menu">
+            <v-btn class="ma-2 backBtn black--text" color="white" dark>
+              <v-icon dark left class="black--text"> mdi-arrow-left </v-icon>
+              Back
+            </v-btn>
+          </router-link>
           <v-sheet class="tab_menu">
             <tab-menu :selectedRes="selectedRes" />
           </v-sheet>
@@ -23,42 +22,18 @@
   </div>
 </template>
 <script>
-import TabMenu from './TabMenu.vue';
-import FoooterSection from '@/components/common/FooterSection.vue';
+import TabMenu from "./TabMenu.vue";
+import FoooterSection from "@/components/common/FooterSection.vue";
 export default {
   components: { TabMenu, FoooterSection },
-  name: 'RestaurantDetail',
-  props: {
-    selectedRes: {
-      type: Object,
-      required: true,
-    },
-  },
-  mounted: {},
+  name: "RestaurantDetail",
   data() {
     return {
-      reviewCount: '',
+      // session에 저장한 데이터 호출
+      region: sessionStorage.getItem("region"), // 선택한 지역 region에 저장
+      menu: sessionStorage.getItem("menu"), // 선택한 메뉴 menu에 저장
+      selectedRes: JSON.parse(sessionStorage.getItem("Item")), // 선택한 식당 정보 selectedRes에 저장
     };
   },
-  methods: {},
 };
 </script>
-
-<style>
-.app {
-  position: relative;
-}
-.backBtn {
-  position: absolute;
-  left: 2vw;
-  top: 13vh;
-}
-.restaurant {
-  min-height: 44vw;
-}
-@media (max-width: 1800px) {
-  .restaurant {
-    min-height: 60vw;
-  }
-}
-</style>

@@ -16,6 +16,7 @@
 <script>
 export default {
   props: {
+    // 선택한 식당 정보
     selectedRes: {
       type: Object,
       required: true,

@@ -1,14 +1,9 @@
 <template>
   <div>
+    <!-- 헤더 -->
     <HeaderSection />
-    <router-view
-      @setRegion="setRegion"
-      @setMenu="setMenu"
-      :selectedRegion="selectedRegion"
-      :selectedMenu="selectedMenu"
-      @getDetail="getDetail"
-      :selectedRes="selectedRes"
-    />
+    <!-- 메인, 검색결과, 상세페이지 -->
+    <router-view />
   </div>
 </template>
 
@@ -17,19 +12,15 @@ import HeaderSection from "@/components/common/HeaderSection.vue";
 import axios from "axios";
 
 export default {
-  name: "ImgCard",
+  name: "IndexView",
   data() {
     return {
-      dataList: [], //모든 식당
+      dataList: [], //전체 데이터
       koreanFood: [], //한식
-      chineseFood: [], //중국식
-      japaneseFood: [], //일본식
+      chineseFood: [], //중식
+      japaneseFood: [], //일식
       globalFood: [], //외국음식
-      fastFood: [], //패스트푸드,
-      selectedRegion: "", //선택한 지역
-      selectedMenu: "", //선택한 메뉴
-      selectedRes: [], //선택한 식당 정보
-      allMenus: [], //모든 메뉴(자동완성어)
+      fastFood: [], //패스트푸드
     };
   },
   components: {
@@ -37,57 +28,19 @@ export default {
   },
 
   mounted() {
+    //전체 데이터
     this.fetchData();
   },
 
   methods: {
-    //데이터 호출 함수
-    setRegion(name) {
-      this.selectedRegion = name;
-    },
-    setMenu(menu) {
-      this.selectedMenu = menu;
-    },
-    getDetail(item) {
-      this.selectedRes = item;
-    },
+    //api호출 및 데이터 추가, store에 저장
     fetchData() {
       axios
-        .get("https://raw.githubusercontent.com/sj5466/feelanet__json/main/datas.json")
+        .get("https://raw.githubusercontent.com/sj5466/feelanet__json__last/main/datas.json")
         .then((response) => {
           var obj = response.data.data;
           const timeData = ["11:00 - 20:00", "10:00 - 21:00", "12:00 - 20:00", "11:00 - 19:00", "09:00 - 21:00"];
           const rateData = [3.5, 4, 4.5, 5];
-          var reviewData = [
-            {
-              userId: "jidsdj79",
-              title: "최고입니다..",
-              content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
-              writeDay: "2022-10-15",
-              rates: 4,
-            },
-            {
-              userId: "dfghgfdsa33",
-              title: "최고입니다..",
-              content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
-              writeDay: "2022-10-16",
-              rates: 4.5,
-            },
-            {
-              userId: "werty22",
-              title: "최고입니다..",
-              content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
-              writeDay: "2022-10-17",
-              rates: 5,
-            },
-            {
-              userId: "sdfghgfd46",
-              title: "최고입니다..",
-              content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
-              writeDay: "2022-10-18",
-              rates: 4,
-            },
-          ];
 
           // 한국음식
           const tagDataKo = [
@@ -111,7 +64,7 @@ export default {
             "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA2MTNfMTYw%2FMDAxNjU1MTA1MjE1NTIy.0TC1k8cW-t2LdXuJ8E5mOQKRGU6XAU4M2g_KW8MGgpUg.2enMnGg4ytcocGKh99PtygXBIrl7DYUZ4fh8iD88_0kg.JPEG.petmaru0100%2F20220610%25A3%25DF141452.jpg&type=sc960_832",
           ];
 
-          //중국식
+          //중식
           const tagDataCh = [
             { name: "마라탕", price: "9,900" },
             { name: "지삼선", price: "12,000" },
@@ -208,7 +161,7 @@ export default {
             //한식
             if (obj[i].title == "한식") {
               // 랜덤 돌려서 빈 배열에 추가
-              for (let i = 0; i < foodImgKo.length; i++) {
+              for (let i = 0; i < 20; i++) {
                 tagEmpData.push(tagDataKo[Math.floor(Math.random() * tagDataKo.length)]);
                 imgEmpData.push(foodImgKo[Math.floor(Math.random() * foodImgKo.length)]);
               }
@@ -223,7 +176,40 @@ export default {
                 menu: [...new Set(tagEmpData)], // 메뉴(이름,가격)
                 mainImg: foodImgKo[Math.floor(Math.random() * foodImgKo.length)], //메인이미지(1개)
                 subImg: [...new Set(imgEmpData)], //서브이미지(여러개)
-                review: reviewData, //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                review: [
+                  {
+                    userId: "jidsdj11",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.15.",
+                    rates: 4,
+                  },
+                  {
+                    userId: "dfghgfdsa22",
+                    title: "최고입니다..",
+                    content: "대체로 만족 음식은 대체로 깔끔, 양도 많고 다채로움 다만 예약일정 빠듯해서인지 좀 다급하게 음식이 들어오는 느낌은 있음",
+                    writeDay: "2022.10.16.",
+                    rates: 4.5,
+                  },
+                  {
+                    userId: "werty33",
+                    title: "최고입니다..",
+                    content: "해우리특정식 먹었어요. 남도한정식이고 가격은 좀 있다고 생각할 수 있지만, 굉장히 다양하게 잘 나오네요",
+                    writeDay: "2022.10.17.",
+                    rates: 5,
+                  },
+                  {
+                    userId: "sdfghgfd44",
+                    title: "최고입니다..",
+                    content:
+                      "이번에 남자친구랑 기념일이라 좀 특별한 곳 찾다가 회사 근처에 해우리가 생겼길래 와봤어요 신축 건물이라 그런지 그 전 방문했던 매장 보다 더 고급진 느낌이라 좋았어요~ 점심 메뉴도 많아서 담번엔 점심에 방문 해보려구요 ㅎㅎ",
+                    writeDay: "2022.10.18.",
+                    rates: 4,
+                  },
+                ],
+                id: obj[i].id, //id : 0, 1, 2 ...
+                active: 0, // 찜하기
               });
               // 배열 초기화
               tagEmpData = [];
@@ -233,7 +219,7 @@ export default {
             //중국식
             else if (obj[i].title === "중국식") {
               // 랜덤 돌려서 빈 배열에 추가
-              for (let i = 0; i < foodImgKo.length; i++) {
+              for (let i = 0; i < 20; i++) {
                 tagEmpData.push(tagDataCh[Math.floor(Math.random() * tagDataCh.length)]);
                 imgEmpData.push(foodImgCh[Math.floor(Math.random() * foodImgCh.length)]);
               }
@@ -248,7 +234,40 @@ export default {
                 menu: [...new Set(tagEmpData)], // 메뉴(이름,가격)
                 mainImg: foodImgCh[Math.floor(Math.random() * foodImgCh.length)], //메인이미지(1개)
                 subImg: [...new Set(imgEmpData)], //서브이미지(여러개)
-                review: reviewData, //리뷰(날짜, 아이디, 별점, 제목, 내용)
+
+                //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                review: [
+                  {
+                    userId: "jidsdj55",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.15.",
+                    rates: 4,
+                  },
+                  {
+                    userId: "dfghgfdsa66",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.16.",
+                    rates: 4.5,
+                  },
+                  {
+                    userId: "werty77",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.17.",
+                    rates: 5,
+                  },
+                  {
+                    userId: "sdfghgfd88",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.18.",
+                    rates: 4,
+                  },
+                ],
+                id: obj[i].id, //id : 0, 1, 2 ...
+                active: 0, //찜하기
               });
               // 배열 초기화
               tagEmpData = [];
@@ -258,7 +277,7 @@ export default {
             //일식
             else if (obj[i].title === "일식") {
               // 랜덤 돌려서 빈 배열에 추가
-              for (let i = 0; i < foodImgJp.length; i++) {
+              for (let i = 0; i < 20; i++) {
                 tagEmpData.push(tagDataJp[Math.floor(Math.random() * tagDataJp.length)]);
                 imgEmpData.push(foodImgJp[Math.floor(Math.random() * foodImgJp.length)]);
               }
@@ -273,7 +292,38 @@ export default {
                 menu: [...new Set(tagEmpData)], // 메뉴(이름,가격)
                 mainImg: foodImgJp[Math.floor(Math.random() * foodImgJp.length)], //메인이미지(1개)
                 subImg: [...new Set(imgEmpData)], //서브이미지(여러개)
-                review: reviewData, //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                review: [
+                  {
+                    userId: "jidsdj99",
+                    title: "최고입니다..",
+                    content: "저녁은 웨이팅필수!! 평일 7시에 도착해서 1시간 쫌 안되게 들어갔어요 기다릴만한 맛입니다🌝",
+                    writeDay: "2022.10.15.",
+                    rates: 4,
+                  },
+                  {
+                    userId: "dfghgfdsa00",
+                    title: "최고입니다..",
+                    content: "예전에 선릉점 가보고 정말 오랜만에 먹었어요! 살도 많고 무엇보다 매운 양념 이 진짜 맛있었어요😋",
+                    writeDay: "2022.10.16.",
+                    rates: 4.5,
+                  },
+                  {
+                    userId: "werty11",
+                    title: "최고입니다..",
+                    content: "유튜브에서 보고 궁금했던 곳인데 드디어 먹어봤어요!! 토요일에 오픈 시간 맞춰서 갔는데도 손님들 많 았고 웨이팅 있었어요!! ",
+                    writeDay: "2022.10.17.",
+                    rates: 5,
+                  },
+                  {
+                    userId: "sdfghgfd12",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.18.",
+                    rates: 4,
+                  },
+                ], //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                id: obj[i].id, //id : 0, 1, 2 ...
+                active: 0, //찜하기
               });
               // 배열 초기화
               tagEmpData = [];
@@ -283,7 +333,7 @@ export default {
             //양식
             else if (obj[i].title === "외국음식전문점(인도태국등)") {
               // 랜덤 돌려서 빈 배열에 추가
-              for (let i = 0; i < foodImgGb.length; i++) {
+              for (let i = 0; i < 20; i++) {
                 tagEmpData.push(tagDataGb[Math.floor(Math.random() * tagDataGb.length)]);
                 imgEmpData.push(foodImgGb[Math.floor(Math.random() * foodImgGb.length)]);
               }
@@ -298,7 +348,39 @@ export default {
                 menu: [...new Set(tagEmpData)], // 메뉴(이름,가격)
                 mainImg: foodImgGb[Math.floor(Math.random() * foodImgGb.length)], //메인이미지(1개)
                 subImg: [...new Set(imgEmpData)], //서브이미지(여러개)
-                review: reviewData, //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                review: [
+                  {
+                    userId: "jidsdj13",
+                    title: "최고입니다..",
+                    content: "유튜브 또간집 1등에 비주얼도 맛있어 보여서 다녀 왔는데 정말 맛있었어요..!😋 ",
+                    writeDay: "2022.10.15.",
+                    rates: 4,
+                  },
+                  {
+                    userId: "dfghgfdsa14",
+                    title: "최고입니다..",
+                    content:
+                      "떡이 크고 엄청 말랑말랑해요! 음식 나오구 3분 뒤에 떡부터 먼저 먹으면 돼요. 끓일수록 국물이 진해져서 감자랑 으깨먹으니 더 맛있어요. ",
+                    writeDay: "2022.10.16.",
+                    rates: 4.5,
+                  },
+                  {
+                    userId: "werty15",
+                    title: "최고입니다..",
+                    content: "유튜브에서 보고 궁금했던 곳인데 드디어 먹어봤어요!! 토요일에 오픈 시간 맞춰서 갔는데도 손님들 많 았고 웨이팅 있었어요!! ",
+                    writeDay: "2022.10.17.",
+                    rates: 5,
+                  },
+                  {
+                    userId: "sdfghgf16",
+                    title: "최고입니다..",
+                    content: "평일점심엔 2만원에 가성비 짱이고 저녁에는 3명이 서 방문하면 가성비 진짜좋을것같아요.",
+                    writeDay: "2022.10.18.",
+                    rates: 4,
+                  },
+                ], //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                id: obj[i].id, //id : 0, 1, 2 ...
+                active: 0, //찜하기
               });
               // 배열 초기화
               tagEmpData = [];
@@ -308,7 +390,7 @@ export default {
             //패스트푸드
             else if (obj[i].title === "패스트푸드") {
               // 랜덤 돌려서 빈 배열에 추가
-              for (let i = 0; i < foodImgGb.length; i++) {
+              for (let i = 0; i < 20; i++) {
                 tagEmpData.push(tagDataFa[Math.floor(Math.random() * tagDataFa.length)]);
                 imgEmpData.push(foodImgFa[Math.floor(Math.random() * foodImgFa.length)]);
               }
@@ -323,7 +405,39 @@ export default {
                 menu: [...new Set(tagEmpData)], // 메뉴(이름,가격)
                 mainImg: foodImgFa[Math.floor(Math.random() * foodImgFa.length)], //메인이미지(1개)
                 subImg: [...new Set(imgEmpData)], //서브이미지(여러개)
-                review: reviewData, //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                review: [
+                  {
+                    userId: "jidsdj55",
+                    title: "최고입니다..",
+                    content:
+                      "매장이 넓고 깨끗해서 식사하기 편했어요~ 음식도 따뜻하고 빠르게 나와서 잘 먹었고 계속 돌아다니시 면서 김치리필 해주셔서 편하고 좋았습니다! ",
+                    writeDay: "2022.10.15.",
+                    rates: 4,
+                  },
+                  {
+                    userId: "dfghgfdsa66",
+                    title: "최고입니다..",
+                    content: "동네 맛집이에요 ㅎㅎ모든 밑반찬 다 맛있구요 건강해지는 느낌이에요 ㅎㅎ항상 사람 많더라구요 ㅎㅎ",
+                    writeDay: "2022.10.16.",
+                    rates: 4.5,
+                  },
+                  {
+                    userId: "werty77",
+                    title: "최고입니다..",
+                    content: "유튜브에서 보고 궁금했던 곳인데 드디어 먹어봤어요!! 토요일에 오픈 시간 맞춰서 갔는데도 손님들 많 았고 웨이팅 있었어요!! ",
+                    writeDay: "2022.10.17.",
+                    rates: 5,
+                  },
+                  {
+                    userId: "sdfghgfd88",
+                    title: "최고입니다..",
+                    content: "평일점심엔 2만원에 가성비 짱이고 저녁에는 3명이 서 방문하면 가성비 진짜좋을것같아요.",
+                    writeDay: "2022.10.18.",
+                    rates: 4,
+                  },
+                ], //리뷰(날짜, 아이디, 별점, 제목, 내용)
+                id: obj[i].id, //id : 0, 1, 2 ...
+                active: 0, //찜하기
               });
               // 배열 초기화
               tagEmpData = [];

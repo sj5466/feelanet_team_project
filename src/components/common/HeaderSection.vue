@@ -6,7 +6,7 @@
           <a href="/home"> <img src="../../assets/image/logo@3x.png" alt="logo" /></a>
         </div>
         <!-- //logo -->
-        <div class="search__bar" @click="onClickSearchBar">
+        <div class="search__bar">
           <v-autocomplete
             v-model="model"
             :items="items"
@@ -19,21 +19,18 @@
             item-text="name"
             item-value="id"
             label="지역 및 음식을 검색해주세요"
-            solo>
+            solo
+            @input.native="inputEvent"
+          >
             <template v-slot:no-data>
-              <v-list-item>
-                <v-list-item-title>
-                  Search for your favorite
-                  <strong>Cryptocurrency</strong>
-                </v-list-item-title>
-              </v-list-item>
+              <v-list-item> <v-list-item-title> 지역 및 음식을 검색해주세요 </v-list-item-title>> </v-list-item>
             </template>
-            <template v-slot:selection="{ attr, on, selected }">
-              <v-chip v-bind="attr" :input-value="selected" color="blue-grey" class="white--text" v-on="on">
-                <v-icon left> </v-icon>
-                <span v-text="'중랑구'"></span>
+            <template v-slot:selection="{ attr, on, item, selected }">
+              <v-chip v-bind="attr" :input-value="selected" color="black" outlined class="white--text" v-on="on">
+                <span class="search__word" v-text="setRegion(item.name)"></span>
               </v-chip>
             </template>
+
             <template v-slot:item="{ item }">
               <v-list-item-avatar color="indigo" class="text-h5 font-weight-light white--text">
                 {{ item.name.charAt(0) }}
@@ -50,19 +47,19 @@
         </div>
 
         <div class="search__icon">
-          <v-btn color="white" fab small>
-            <v-icon> mdi-magnify </v-icon>
-          </v-btn>
+          <router-link :to="'/search_list/' + region + '/' + searchedItem" @click.native="searchItem">
+            <v-btn color="white" fab small>
+              <v-icon> mdi-magnify </v-icon>
+            </v-btn>
+          </router-link>
         </div>
         <!-- //search__icon -->
-
         <!-- heart__icon -->
         <v-btn class="mx-2" fab dark small color="white" @click="isMypage = !isMypage">
           <v-icon dark color="pink"> mdi-heart </v-icon>
         </v-btn>
         <!-- // heart__icon -->
       </div>
-
       <!-- // header__bar-->
     </v-row>
     <!-- //row -->
@@ -70,7 +67,8 @@
     <div class="my__page" v-if="isMypage">
       <h1 class="my__page__title">나의 Wish List</h1>
       <div class="my__page__list">
-        <div class="my__page__item" v-for="(list, idx) in lists" :key="list">
+        <div class="my__page__phrases" v-show="lists.length == 0 ? true : false">Wish List를 채워 보세요!</div>
+        <div class="my__page__item" v-for="list in lists" :key="list.name">
           <div class="my__page__contents">
             <div class="photo">
               <img :src="list.mainImg" :alt="list.alt" />
@@ -85,7 +83,7 @@
               <p class="list__desc">{{ list.region }}- {{ list.title }}</p>
             </div>
           </div>
-          <v-btn class="mx-2 heart" fab dark small color="white" @click="deleteBtn(idx)">
+          <v-btn class="mx-2 heart" fab dark small color="white" @click="deleteBtn(list.id), favoritBtnActive(list.id)">
             <v-icon dark small color="pink"> mdi-heart </v-icon>
           </v-btn>
         </div>
@@ -103,22 +101,14 @@
 </template>
 
 <script>
-import EventBus from '@/EventBus/EventBus';
-// import { mapGetters } from "vuex";
-// import { mapState } from "vuex";
+import EventBus from "@/EventBus/EventBus";
 export default {
   mounted() {
     this.fetchData; // 데이터 호출
-    // this.recieveData();
-    EventBus.$on('addFavorite', this.recieveData);
-    EventBus.$on('listDelete', this.deleteBtn);
+    EventBus.$on("addFavorite", this.recieveData);
+    EventBus.$on("listDelete", this.deleteBtn);
   },
-  props: {
-    selectedRes: {
-      type: Object,
-      required: true,
-    },
-  },
+  props: ["selectedRes"],
   data: () => ({
     isEditing: false,
     isLoading: false,
@@ -128,48 +118,35 @@ export default {
     search: null,
     tab: null,
     lists: [],
-    menuList: [
-      '김치찌개',
-      '된장찌개',
-      '순두부찌개',
-      '제육볶음',
-      '김치전',
-      '파전',
-      '콩비지찌개',
-      '잡채',
-      '마라탕',
-      '지삼선',
-      '마파두부',
-      '싼라펀',
-      '꿔바로우',
-      '미씨엔',
-      '카오렁미엔',
-      '우육면',
-      '연어초밥',
-      '모듬초밥',
-      '참치초밥',
-      '연어사시미',
-      '광어사시미',
-      '모듬사시미',
-      '카이센동',
-      '연어동',
-      '팟타이',
-      '쌀국수',
-      '분짜',
-      '쏨땀',
-      '매운쌀국수',
-      '곱창쌀국수',
-      '커리덮밥',
-      '탄두리치킨',
-      '양념치킨',
-      '후라이드치킨',
-      '치킨버거',
-      '제로콜라',
-      '간장치킨',
-      '갈릭치킨',
-      '반반치킨',
-      '핫도그',
+    regions: [
+      { id: 0, name: "도봉구" },
+      { id: 1, name: "강북구" },
+      { id: 2, name: "노원구" },
+      { id: 3, name: "중랑구" },
+      { id: 4, name: "동대문구" },
+      { id: 5, name: "서대문구" },
+      { id: 6, name: "성북구" },
+      { id: 7, name: "종로구" },
+      { id: 8, name: "은평구" },
+      { id: 9, name: "성동구" },
+      { id: 10, name: "강남구" },
+      { id: 11, name: "마포구" },
+      { id: 12, name: "용산구" },
+      { id: 13, name: "중구" },
+      { id: 14, name: "관악구" },
+      { id: 15, name: "영등포구" },
+      { id: 16, name: "광진구" },
+      { id: 17, name: "강동구" },
+      { id: 18, name: "송파구" },
+      { id: 19, name: "구로구" },
+      { id: 20, name: "서초구" },
+      { id: 21, name: "동작구" },
+      { id: 22, name: "양천구" },
+      { id: 23, name: "금천구" },
     ],
+    region: "",
+    searchedItem: "",
+    inputValue: "",
   }),
   watch: {
     model(val) {
@@ -180,37 +157,51 @@ export default {
       // Items have already been loaded
       if (this.items.length > 0) return;
       this.isLoading = true;
-      // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then(res => res.clone().json())
-        .then(res => {
-          this.items = res;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        .finally(() => (this.isLoading = false));
+      this.items = this.regions;
+      this.isLoading = false;
     },
   },
+
   methods: {
     deleteBtn(idx) {
+      //삭제 버튼 함수
       var index = this.lists.findIndex(function (num) {
-        return idx === num;
+        return num.id === idx;
       });
       this.lists.splice(index, 1);
     },
-    // 검색창 클릭시 데이터 확인
-    onClickSearchBar() {
-      console.log(this.dataList);
+    favoritBtnActive(selectedRes) {
+      //취소버튼을 누르면 취소하기에서 찜하기로 바뀌는 게 하는 함수
+      EventBus.$emit("favoritBtnActive", selectedRes);
     },
     recieveData(selectedRes) {
       //RestaurantDetail 컴퍼넌트에서 데이터를 Wish List에 추가하기
       this.lists.push(selectedRes);
     },
-  },
-  computed: {
-    // ...mapState(["dataList"]),
-    // ...mapGetters(["fetchData"]),
+    // 검색창 지역 저장
+    setRegion(name) {
+      this.region = name;
+      return name;
+    },
+    // 검색 버튼 클릭시
+    searchItem() {
+      if (document.URL.indexOf("http://localhost:8080/home") >= 0) {
+        return;
+      } else if (this.region === "") {
+        alert("지역을 먼저 검색해주세요");
+      } else {
+        // 새로고침시 데이터 리로드
+        window.location.reload();
+      }
+    },
+    // 검색창 입력값 저장
+    inputEvent($event) {
+      if ($event.target.value != null) {
+        this.inputValue = $event.target.value;
+        sessionStorage.setItem("searchItem", this.inputValue); // 검색값 저장
+        this.searchedItem = sessionStorage.getItem("searchItem");
+      }
+    },
   },
 };
 </script>
@@ -219,4 +210,7 @@ export default {
 @import url(../../assets/css/common.css);
 @import url(../../assets/css/style.css);
 @import url(../../assets/css/fonts.css);
+.v-text-field.v-text-field--solo .v-input__control input {
+  font-size: 16px;
+}
 </style>

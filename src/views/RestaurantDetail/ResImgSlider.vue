@@ -1,19 +1,26 @@
 <template>
-  <v-sheet class="mx-auto" max-width="87%">
-    <v-slide-group multiple show-arrows>
-      <v-slide-item v-for="(img, idx) in selectedRes.subImg" :key="idx">
-        <v-img class="mx-2 table_slider_img" :src="img"></v-img>
-      </v-slide-item>
-    </v-slide-group>
-  </v-sheet>
+  <div class="slider" ref="direction">
+    <div class="prev" @click="scrollPrev(1)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </div>
+    <div class="slider__items">
+      <div class="item" v-for="(img, idx) in selectedRes.subImg" :key="idx">
+        <img :src="img" />
+      </div>
+    </div>
+    <div class="next" @click="scrollNext(1)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+  </div>
 </template>
 <script>
-// import { mapState } from "vuex";
 export default {
   name: "ResImgSlider",
 
   data() {
-    return {};
+    return {
+      init: 0,
+    };
   },
   props: {
     selectedRes: {
@@ -21,8 +28,36 @@ export default {
       required: true,
     },
   },
-  mounted() {},
-
-  methods: {},
+  mounted() {
+    this.scrollPrev;
+    this.scrollNext;
+  },
+  destroyed() {
+    this.scrollPrev;
+    this.scrollNext;
+  },
+  methods: {
+    scrollPrev() {
+      //왼쪽 버튼 클릭시 image slider가 왼쪽으로 이동
+      let directionCont = document.querySelector(".slider__items");
+      this.init -= 410;
+      directionCont.scrollTo({
+        top: 0,
+        left: this.init,
+        behavior: "smooth",
+      });
+    },
+    scrollNext() {
+      //오른쪽 버튼 클릭시 image slider가 오른쪽으로 이동
+      let directionCont = document.querySelector(".slider__items");
+      this.init += 410;
+      directionCont.scrollTo({
+        top: 0,
+        left: this.init,
+        behavior: "smooth",
+      });
+    },
+  },
 };
 </script>
+<style></style>

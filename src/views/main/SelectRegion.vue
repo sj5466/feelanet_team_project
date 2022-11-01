@@ -61,66 +61,8 @@ export default {
       element.scrollIntoView({ behavior: "smooth" });
     },
     setRegion(name) {
-      // console.log(name);
-      this.$emit("setRegion", name);
+      sessionStorage.setItem("region", name);
     },
   },
 };
 </script>
-
-<style>
-#region {
-  font-family: "GmarketSansLight";
-  background: url(../../assets/image/main1@3x.jpg);
-  background-size: cover;
-  position: relative;
-  z-index: 8000;
-}
-.region {
-  backdrop-filter: blur(15px);
-  padding: 17em 0 10em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.region__title {
-  font-size: 3rem !important;
-  font-family: "GmarketSansBold";
-  text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.8);
-  color: #fff;
-}
-.region__title .fa-quote-left {
-  margin-right: 10px;
-}
-.region__title .fa-quote-right {
-  margin-left: 10px;
-}
-.region__desc {
-  font-size: 2rem !important;
-  font-family: "GmarketSansMedium";
-  color: #fff;
-}
-.region__items {
-  padding: 10em 0 0;
-  width: 77%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.region__items span {
-  /* color: #333; */
-  text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.8);
-}
-.v-btn.v-size--default {
-  font-size: 1.1rem;
-  font-family: "GmarketSansMedium";
-}
-.v-btn:not(.v-btn--round).v-size--default {
-  margin: 15px;
-}
-@media (max-width: 1655px) {
-  .region__items {
-    width: 64%;
-  }
-}
-</style>

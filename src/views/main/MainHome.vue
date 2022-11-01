@@ -1,9 +1,7 @@
 <template>
   <div id="home">
-    <!-- <p>Home 입니다.</p> -->
-    <!-- <router-view /> -->
-    <SelectRegion @setRegion="setRegion" />
-    <SelectMenu @setMenu="setMenu" />
+    <SelectRegion />
+    <SelectMenu />
   </div>
 </template>
 
@@ -14,14 +12,6 @@ export default {
   components: {
     SelectRegion,
     SelectMenu,
-  },
-  methods: {
-    setRegion(name) {
-      this.$emit("setRegion", name);
-    },
-    setMenu(menu) {
-      this.$emit("setMenu", menu);
-    },
   },
 };
 </script>

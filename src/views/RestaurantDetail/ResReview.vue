@@ -53,7 +53,7 @@
         </div>
       </h2>
     </div>
-    <review-details :selectedRes="selectedRes" @editReview="editReview" />
+    <review-details :resReviews="resReviews" @editReview="editReview" />
   </div>
 </template>
 <script>
@@ -62,55 +62,72 @@ import ReviewDetails from "./ReviewDetails.vue";
 export default {
   components: { ReviewDetails },
   props: {
+    // 선택한 식당 정보
     selectedRes: {
       type: Object,
       required: true,
     },
   },
+  created() {
+    // 리뷰
+    this.resReviews = this.selectedRes;
+  },
   data: () => ({
+    // 모달
     sheet: false,
     dialog: false,
     confirm: false,
-    reviewTitle: "",
-    reviewContent: "",
-    modifyReviewIdx: null,
-    setRates: 0,
+    reviewTitle: "", //리뷰 제목
+    reviewContent: "", //리뷰 내용
+    modifyReviewIdx: null, //리뷰 index
+    setRates: 0, //리뷰 별점
+    resReviews: [], // 리뷰
   }),
+
   methods: {
+    // 리뷰 추가하는 함수
     isAddReview() {
-      // console.log(this.setRates);
+      // 모달 닫기
       this.sheet = !this.sheet;
       this.dialog = !this.dialog;
       this.confirm = !this.confirm;
       // eslint-disable-next-line vue/no-mutating-props
+
+      // idx로 해당 리뷰 찾아서 수정
       if (this.modifyReviewIdx !== null) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.selectedRes.review[this.modifyReviewIdx].title = this.reviewTitle;
-        // eslint-disable-next-line vue/no-mutating-props
-        this.selectedRes.review[this.modifyReviewIdx].content = this.reviewContent;
+        this.resReviews.review[this.modifyReviewIdx].title = this.reviewTitle;
+        this.resReviews.review[this.modifyReviewIdx].content = this.reviewContent;
+        this.resReviews.review[this.modifyReviewIdx].rates = this.setRates;
+        this.reviewTitle = "";
+        this.reviewContent = "";
+        this.modifyReviewIdx = null;
       } else {
-        var today = new Date().toLocaleDateString();
+        var today = new Date().toLocaleDateString(); // 오늘 날짜
         // eslint-disable-next-line vue/no-mutating-props
-        this.selectedRes.review.push({
+        this.resReviews.review.push({
           writeDay: today,
           title: this.reviewTitle,
           content: this.reviewContent,
           userId: "test",
           rates: this.setRates,
         });
+        this.reviewTitle = "";
+        this.reviewContent = "";
+        this.modifyReviewIdx = null;
       }
     },
 
+    // 리뷰 수정하는 함수
     editReview(title, content, idx) {
       this.reviewTitle = title;
       this.reviewContent = content;
       this.sheet = !this.sheet;
       this.modifyReviewIdx = idx;
     },
+
+    // 별점 수정
     updateModel($event) {
-      // console.log($event); //
       this.setRates = $event.$event;
-      // console.log($event.$event); // 3
     },
   },
 };

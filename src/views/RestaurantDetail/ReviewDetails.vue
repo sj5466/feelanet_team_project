@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="review" v-for="(review, idx) in selectedRes.review" :key="review.userId">
+    <table class="review" v-for="(review, idx) in resReviews.review" :key="review.userId">
       <tbody>
         <tr>
           <td rowspan="2" class="review_td_a">
@@ -34,29 +34,31 @@
         </tr>
       </tbody>
     </table>
-    <!-- <div class="show_more">더보기 ▼</div> -->
   </div>
 </template>
 <script>
 export default {
   props: {
-    selectedRes: {
+    // 선택한 식당 리뷰
+    resReviews: {
       type: Object,
       required: true,
     },
   },
   name: "ReviewDetails",
   methods: {
+    // 리뷰 수정
     editReview(title, content, idx) {
       this.$emit("editReview", title, content, idx);
     },
 
+    // 리뷰 삭제
     deleteReview(idx) {
-      var index = this.selectedRes.review.findIndex(function (item, num) {
+      var index = this.resReviews.review.findIndex(function (item, num) {
         return num === idx;
       });
       // eslint-disable-next-line vue/no-mutating-props
-      this.selectedRes.review.splice(index, 1);
+      this.resReviews.review.splice(index, 1);
     },
   },
 };

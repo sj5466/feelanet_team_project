@@ -1,7 +1,7 @@
 <template>
   <div id="select">
-    <SelectMenuCont :Horizontal="Horizontal" :scrollIconEvent="scrollIconEvent" @setMenu="setMenu" />
-    <SelectMenuIcon :scrollIconEvent="scrollIconEvent" />
+    <SelectMenuCont @setMenu="setMenu" />
+    <SelectMenuIcon />
   </div>
 </template>
 
@@ -21,7 +21,10 @@ export default {
     window.addEventListener("scroll", this.Horizontal);
     window.addEventListener("scroll", this.scrollIconEvent);
   },
-  mounted() {},
+  destroyed() {
+    window.removeEventListener("scroll", this.Horizontal);
+    window.removeEventListener("scroll", this.scrollIconEvent);
+  },
   methods: {
     Horizontal() {
       //--> 가로모드 생성
@@ -34,61 +37,47 @@ export default {
         // eslint-disable-next-line no-undef
         gsap.to("#menu", { left: -offset, ease: "linear" });
       }
-      requestAnimationFrame(this.Horizontal);
+      // requestAnimationFrame(this.Horizontal);44
     },
     scrollIconEvent() {
-      let selectContainers = document.querySelectorAll(".section__container");
+      //가로 스크롤 시 발생하는 이벤트(배경색, 아이콘)
       let selectItem = document.querySelector(".section__item");
-      let iconImg = document.querySelectorAll(".menu__icon__img");
 
-      for (let i = 0; i < selectContainers.length; i++) {
-        if (selectContainers[i].getBoundingClientRect().x <= 0) {
-          var currentIndex = 0;
-          if (selectItem.getBoundingClientRect().x > -1669) {
-            currentIndex = 1;
-            selectItem.style.background = "beige";
-          } else if (selectItem.getBoundingClientRect().x > -3338) {
-            currentIndex = 2;
-            selectItem.style.background = "#ECE7DE";
-          } else if (selectItem.getBoundingClientRect().x > -5007) {
-            currentIndex = 3;
-            selectItem.style.background = "#E2E7DE";
-          } else if (selectItem.getBoundingClientRect().x > -6676) {
-            currentIndex = 4;
-            selectItem.style.background = "#EBE0EB";
-          } else if (selectItem.getBoundingClientRect().x > -8345) {
-            currentIndex = 5;
-            selectItem.style.background = "#F5E3E7";
-          } else {
-            currentIndex = 5;
-            selectItem.style.background = "#F5E3E7";
-          }
-
-          iconImg.forEach((icon) => {
-            if (icon.className.split(" ")[1]) {
-              icon.classList.remove("active");
-            } else {
-              document.querySelector(".menu__icon > div:nth-child(" + currentIndex + ")").classList.add("active");
-            }
-          });
-        } else {
-          document.querySelector(".menu__icon > div:nth-child(" + (i + 1) + ")").classList.remove("active");
-        }
+      if (selectItem.getBoundingClientRect().x > -50) {
+        document.querySelector(".menu__icon > div:nth-child(1)").style.transform = "translateY(80px)";
+      } else if (selectItem.getBoundingClientRect().x > -1669) {
+        document.querySelector(".menu__icon > div:nth-child(2)").style.transform = "translateY(80px)";
+        document.querySelector(".menu__icon > div:nth-child(1)").style.transform = "translateY(10px)";
+        selectItem.style.background = "beige";
+      } else if (selectItem.getBoundingClientRect().x > -3338) {
+        document.querySelector(".menu__icon > div:nth-child(3)").style.transform = "translateY(80px)";
+        document.querySelector(".menu__icon > div:nth-child(2)").style.transform = "translateY(10px)";
+        document.querySelector(".menu__icon > div:nth-child(1)").style.transform = "translateY(80px)";
+        selectItem.style.background = "#ECE7DE";
+      } else if (selectItem.getBoundingClientRect().x > -5007) {
+        document.querySelector(".menu__icon > div:nth-child(4)").style.transform = "translateY(80px)";
+        document.querySelector(".menu__icon > div:nth-child(3)").style.transform = "translateY(10px)";
+        document.querySelector(".menu__icon > div:nth-child(2)").style.transform = "translateY(80px)";
+        selectItem.style.background = "#E2E7DE";
+      } else if (selectItem.getBoundingClientRect().x > -6676) {
+        document.querySelector(".menu__icon > div:nth-child(5)").style.transform = "translateY(80px)";
+        document.querySelector(".menu__icon > div:nth-child(4)").style.transform = "translateY(10px)";
+        document.querySelector(".menu__icon > div:nth-child(3)").style.transform = "translateY(80px)";
+        selectItem.style.background = "#EBE0EB";
+      } else if (selectItem.getBoundingClientRect().x > -8345 && selectItem.getBoundingClientRect().x > -7000) {
+        document.querySelector(".menu__icon > div:nth-child(5)").style.transform = "translateY(10px)";
+        document.querySelector(".menu__icon > div:nth-child(4)").style.transform = "translateY(80px)";
+        selectItem.style.background = "#F5E3E7";
       }
     },
     setMenu(menu) {
+      //상위 컴퍼넌트로 메뉴에 대한 정보를 전달
       this.$emit("setMenu", menu);
     },
   },
 };
 </script>
 <style>
-#select {
-  position: relative;
-  z-index: 7000;
-  width: 100vw;
-  height: 548vw;
-}
 ._horizontal-scroll[data-v-5ce095ec]::-webkit-scrollbar {
   display: none;
 }
